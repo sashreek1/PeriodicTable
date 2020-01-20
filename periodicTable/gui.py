@@ -18,7 +18,6 @@ class app:
         return ans
 
     def hint_func(self,atno):
-        print("The hint number is", self.hint_no)
         if self.hint_no == 5:
             prev_elem = element(atno-1)
             name = prev_elem.name
@@ -61,6 +60,12 @@ class app:
             messagebox.showwarning("Warning","You have run out of hints")
             self.hint_no-=1
 
+    def disp_answer(self,atno):
+        elem = element(int(atno))
+        sym = elem.symbol
+        name = elem.name
+        message = "The given element is "+name+". So the answer is "+sym
+        messagebox.showinfo("Answer", message)
             
     def submit_func(self,root,submission,atno,box,gen):
         sym = self.get_elem(int(atno.get()))
@@ -117,9 +122,17 @@ GAME RULES :
         b.config(font=("Courier", 22))
         b.place(x=150,y=400)
 
+        b3 = Button(root,text='Answer',command=lambda : self.disp_answer(int(atno.get())))
+        b3.config(font=("Courier", 22))
+        b3.place(x=130,y=470)
+
         b2 = Button(root,text='New',command=lambda : self.submit_func(root,ans.get(),atno,ans,True))
         b2.config(font=("Courier", 22))
         b2.place(x=300,y=400)
+
+        b2 = Button(root,text='Quit',command=lambda : root.destroy())
+        b2.config(font=("Courier", 22))
+        b2.place(x=470,y=470)
 
         ans = Entry(root)
         ans.config(font=("Courier", 88),width=3)
