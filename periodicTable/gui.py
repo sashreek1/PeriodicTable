@@ -62,15 +62,19 @@ class app:
             self.hint_no-=1
 
             
-    def submit_func(self,root,submission,atno,box):
+    def submit_func(self,root,submission,atno,box,gen):
         sym = self.get_elem(int(atno.get()))
-        if submission == sym:
+        if gen:
+            self.hint_no = 5
+            atno.set(str(random.randrange(1,118)))
+            box.delete(0, 'end')
+        
+        elif submission == sym:
             messagebox.showinfo("Information","Correct!!")
             self.hint_no = 5
             atno.set(str(random.randrange(1,118)))
-            print(atno.get())
             box.delete(0, 'end')
-        else:
+        elif submission != sym:
             if self.chances <= 1:
                 messagebox.showwarning("game", "GAME OVER")
                 root.destroy()
@@ -96,7 +100,7 @@ GAME RULES :
     
 * For each question you get 5 hints
 
-* The answer nust be the scientific
+* The answer must be the scientific
     symbol of an element with
     proper casing
     correct answer : Ag
@@ -113,11 +117,15 @@ GAME RULES :
         b.config(font=("Courier", 22))
         b.place(x=150,y=400)
 
+        b2 = Button(root,text='New',command=lambda : self.submit_func(root,ans.get(),atno,ans,True))
+        b2.config(font=("Courier", 22))
+        b2.place(x=300,y=400)
+
         ans = Entry(root)
         ans.config(font=("Courier", 88),width=3)
         ans.place(x=250,y=175)
 
-        b1 = Button(root,text='Submit', command=lambda : self.submit_func(root,ans.get(),atno,ans))
+        b1 = Button(root,text='Submit', command=lambda : self.submit_func(root,ans.get(),atno,ans,False))
         b1.config(font=("Courier", 22))
         b1.place(x=450,y=400)
         
